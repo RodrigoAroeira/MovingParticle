@@ -7,11 +7,10 @@ pygame.display.set_caption("Moving")
 WHITE = (255, 255, 255)
 ROOT.fill(WHITE)
 
-dS = 5
-
 
 def loop():
 
+    dS = 5
     running = True
     particle = Particle(40, (0, 0, 0), pygame.Vector2(400, 400))
     clock = pygame.time.Clock()
@@ -23,6 +22,10 @@ def loop():
             match event.type:
                 case pygame.QUIT:
                     running = False
+
+                case pygame.MOUSEWHEEL:
+                    dS += event.y
+                    print(f"{dS=}")
 
         velocity = pygame.Vector2(0, 0)
 
@@ -39,6 +42,10 @@ def loop():
         if keys[pygame.K_s]:
             velocity.y += dS
 
+        if keys[pygame.K_q]:
+            particle.radius -= dS / 3
+        if keys[pygame.K_e]:
+            particle.radius += dS / 3
         particle.move(velocity)
 
         # Check if the mouse button is pressed
